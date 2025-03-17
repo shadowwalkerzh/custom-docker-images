@@ -22,6 +22,12 @@ This repository is to customize a series of infrastructure docker images to make
 ## db-images
 ### pub-mysql
 > pub-mysql is based on Mysql official images to customize the json log file and volumes, set default root password to `admin`, create default database `test` with full granted account name `user`, password `changeMe123`. Default mysql version is `5.7`, if you want to use `8.0` or higher, please `export IMAGE_TAG=8.0` first and then run the `docker-compose_pub-mysql.yml`
+#### How to run the mysql server 5.7?
+-  `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-mysql/docker-compose_pub-mysql.yml up -d -v`
+#### How to run the mysql server 8.0?
+-  `export IMAGE_TAG=8.0`
+-  `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-mysql/docker-compose_pub-mysql.yml up -d -v`
+
 #### How to access to mysql from docker host?
 - Install mysql client: `sudo apt-get install mysql-client-core-5.7`
 - Create mysqld directory if not existed: `sudo mkdir -p /var/run/mysqld`
@@ -31,6 +37,12 @@ This repository is to customize a series of infrastructure docker images to make
 
 ### pub-mongodb
 > pub-mysql is based on MongoDB official images to customize the json log file and volumes, set default root user `root` and password `root`. Default mongodb version is `4.2.0`, if you want to use higher version like `8.0`, please `export IMAGE_TAG=8.0` first and then run the `docker-compose_pub-mongodb.yml`
+#### How to run the mongodb 4.2.0?
+- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/develop/db-images/pub-mongodb/docker-compose_pub-mongodb.yml up -d -v`
+#### How to run the mongodb 8.0?
+- `export IMAGE_TAG=8.0`
+- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/develop/db-images/pub-mongodb/docker-compose_pub-mongodb.yml up -d -v`
+
 #### How to access to mongodb from docker host?
 - Install latest mongodb client:
   - Add the official MongoDB repository

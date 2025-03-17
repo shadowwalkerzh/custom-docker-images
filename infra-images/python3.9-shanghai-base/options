@@ -1,0 +1,2 @@
+export RELEASE="2.0"
+export TAGS=(walkerzhuo/python3.7-shanghai-base:$RELEASE)

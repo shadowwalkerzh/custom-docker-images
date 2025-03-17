@@ -1,0 +1,45 @@
+version: '3.7'
+services:
+  mongodb:
+    image: mongo:${IMAGE_TAG:-4.2.0}
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 200m
+    restart: always
+    volumes:
+      - configdb:/data/configdb
+      - db:/data/db
+      - log:/var/log/mongodb
+    container_name: standalone.pub-mongodb
+    hostname: standalone.pub-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - 27017:27017
+    networks:
+      - custom-network
+networks:
+  custom-network:
+    driver: bridge
+volumes:
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/db
+      o: bind
+  log:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/log
+      o: bind
+  configdb:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/configdb
+      o: bind

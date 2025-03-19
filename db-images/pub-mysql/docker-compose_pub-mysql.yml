@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   mysql:
-    image: mysql:${IMAGE_TAG:-5.7}
+    image: mysql:${IMAGE_VERSION:-5.7}
     logging:
       driver: json-file
       options:

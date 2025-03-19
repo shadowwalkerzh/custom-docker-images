@@ -1,0 +1,50 @@
+version: '3.7'
+services:
+  nginx:
+    image: nginx:${IMAGE_TAG:-1.19.9}
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 200m
+    restart: always
+    volumes:
+      - log:/var/log/nginx
+      - conf.d:/etc/nginx/conf.d
+      - www:/usr/share/nginx
+      - root_conf:/etc/nginx/nginx.conf
+    container_name: standalone.pub-nginx
+    hostname: standalone.pub-nginx
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - custom-network
+networks:
+  custom-network:
+    driver: bridge
+volumes:
+  log:
+    driver: local
+    driver_opts:
+      type: none
+      device: /opt/pub-nginx/data/log
+      o: bind
+  conf.d:
+    driver: local
+    driver_opts:
+      type: none
+      device: /opt/pub-nginx/data/conf.d
+      o: bind
+  root_conf:
+    driver: local
+    driver_opts:
+      type: none
+      device: /opt/pub-nginx/data/etc/nginx.conf
+      o: bind
+  www:
+    driver: local
+    driver_opts:
+      type: none
+      device: /opt/pub-nginx/data/www
+      o: bind

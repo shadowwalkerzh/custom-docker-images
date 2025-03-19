@@ -20,13 +20,13 @@ This repository customizes a series of infrastructure Docker images to make your
 ## db-images
 
 ### pub-mysql
-> pub-mysql is based on MySQL official images to customize the JSON log file and volumes, set the default root password to `admin`, create a default database `test` with a fully granted account name `user`, password `changeMe123`. The default MySQL version is `5.7`. If you want to use `8.0` or higher, please `export IMAGE_TAG=8.0` first and then run the `docker-compose_pub-mysql.yml`.
+> pub-mysql is based on MySQL official images to customize the JSON log file and volumes, set the default root password to `admin`, create a default database `test` with a fully granted account name `user`, password `changeMe123`. The default MySQL version is `5.7`. If you want to use `8.0` or higher, please edit `options` file with `export IMAGE_VERSION=8.0` first and then run the `docker-compose_pub-mysql.yml`.
 
 #### How to run the MySQL server 5.7?
 - `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-mysql/docker-compose_pub-mysql.yml up -d -v`
 
 #### How to run the MySQL server 8.0?
-- `export IMAGE_TAG=8.0`
+- `export IMAGE_VERSION=8.0`
 - `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-mysql/docker-compose_pub-mysql.yml up -d -v`
 
 #### How to access MySQL from the Docker host?
@@ -36,13 +36,13 @@ This repository customizes a series of infrastructure Docker images to make your
 - Login to MySQL: `mysql -uuser -pchangeMe123`
 
 ### pub-mongodb
-> pub-mongodb is based on MongoDB official images to customize the JSON log file and volumes, set the default root user `root` and password `root`. The default MongoDB version is `4.2.0`. If you want to use a higher version like `8.0`, please `export IMAGE_TAG=8.0` first and then run the `docker-compose_pub-mongodb.yml`.
+> pub-mongodb is based on MongoDB official images to customize the JSON log file and volumes, set the default root user `root` and password `root`. The default MongoDB version is `4.2.0`. If you want to use a higher version like `8.0`, please edit `options` file with `export IMAGE_VERSION=8.0` first and then run the `docker-compose_pub-mongodb.yml`.
 
 #### How to run MongoDB 4.2.0?
 - `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/develop/db-images/pub-mongodb/docker-compose_pub-mongodb.yml up -d -v`
 
 #### How to run MongoDB 8.0?
-- `export IMAGE_TAG=8.0`
+- `export IMAGE_VERSION=8.0`
 - `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/develop/db-images/pub-mongodb/docker-compose_pub-mongodb.yml up -d -v`
 
 #### How to access MongoDB from the Docker host?
@@ -88,6 +88,21 @@ This repository customizes a series of infrastructure Docker images to make your
     ```
   - Check the installed version: `mongosh --version`
   - Connect: `mongosh "mongodb://<username>:<password>@<host>:<port>"`
+
+### pub-redis
+> pub-redis is based on Redis official images to customize the JSON log file and volumes, set the default password `redis_pass`. The default Redis version is `4.0`. If you want to use a higher version like `8.0`, please edit `options` file with `export IMAGE_VERSION=8.0` first and then run the `docker-compose_pub-redis.yml`.
+
+#### How to run the pub-mysql?
+- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-redis/docker-compose_pub-redis.yml up -d -v`
+
+#### How to access pub-redis from the Docker host?
+```sh
+- Install redis client: `sudo apt-get install redis-tools`
+- Login redis: 
+  - `redis-cli`
+  - `auth redis_pass`
+```
+
 
 # References
 - [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices)

@@ -1,5 +1,5 @@
 # custom-docker-images
-This repository customizes a series of infrastructure Docker images to make your development easier and quicker, all of them are <span style="color:blue">**Production Ready**</span>. It provides infra images for Alpine with timezone `Asia/Shanghai`, Python 2.7 and Python 3.9 with timezone `Asia/Shanghai`, MySQL image `pub-mysql`, and MongoDB image `pub-mongodb`.
+This repository customizes a series of infrastructure Docker images to make your development easier and quicker, all of them are **Production Ready**. It provides infra images for Alpine with timezone `Asia/Shanghai`, Python 2.7 and Python 3.9 with timezone `Asia/Shanghai`, MySQL image `pub-mysql`, and MongoDB image `pub-mongodb`.
 
 ## infra-images
 
@@ -39,11 +39,11 @@ This repository customizes a series of infrastructure Docker images to make your
 > pub-mongodb is based on MongoDB official images to customize the JSON log file and volumes, set the default root user `root` and password `root`. The default MongoDB version is `4.2.0`. If you want to use a higher version like `8.0`, please edit `options` file with `export IMAGE_VERSION=8.0` first and then run the `docker-compose_pub-mongodb.yml`.
 
 #### How to run MongoDB 4.2.0?
-- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/develop/db-images/pub-mongodb/docker-compose_pub-mongodb.yml up -d -v`
+- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-mongodb/docker-compose_pub-mongodb.yml up -d -v`
 
 #### How to run MongoDB 8.0?
 - `export IMAGE_VERSION=8.0`
-- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/develop/db-images/pub-mongodb/docker-compose_pub-mongodb.yml up -d -v`
+- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-mongodb/docker-compose_pub-mongodb.yml up -d -v`
 
 #### How to access MongoDB from the Docker host?
 - Install the latest MongoDB client:
@@ -90,9 +90,9 @@ This repository customizes a series of infrastructure Docker images to make your
   - Connect: `mongosh "mongodb://<username>:<password>@<host>:<port>"`
 
 ### pub-redis
-> pub-redis is based on Redis official images to customize the JSON log file and volumes, set the default password `redis_pass`. The default Redis version is `4.0`. If you want to use a higher version like `8.0`, please edit `options` file with `export IMAGE_VERSION=8.0` first and then run the `docker-compose_pub-redis.yml`.
+> pub-redis is based on Redis official images to customize the JSON log file and volumes, set the default password `redis_pass`. The default Redis version is `4.0`. If you want to use a higher version like `8.0`, please edit `options` file with `export IMAGE_VERSION=5.0` first and then run the `docker-compose_pub-redis.yml`.
 
-#### How to run the pub-mysql?
+#### How to run the pub-redis?
 - `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-redis/docker-compose_pub-redis.yml up -d -v`
 
 #### How to access pub-redis from the Docker host?
@@ -102,6 +102,30 @@ This repository customizes a series of infrastructure Docker images to make your
   - `redis-cli`
   - `auth redis_pass`
 ```
+
+### pub-rabbigmq
+> pub-rabbigmq is based on Rabbigmq official images to customize the JSON log file and volumes, both of the default user and password are `admin`. The default Rabbigmq version is `3.8.14`. If you want to use a higher version, please edit `options` file with `export IMAGE_VERSION={your version}` first and then run the `docker-compose_pub-rabbigmq.yml`. If you want to install some customized plugins, please edit file `data/conf/enabled_plugins` and restart service.
+
+#### How to run the pub-rabbigmq?
+- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-rabbigmq/docker-compose_pub-rabbigmq.yml up -d -v`
+
+#### How to access pub-rabbigmq from the Docker host?
+> Visit `http://localhost:15672` in your local browser
+
+
+### pub-elasticsearch
+> pub-elasticsearch is based on Elasticsearch official images to customize the JSON log file and volumes. The default Rabbigmq version is `7.10.1`. If you want to use a higher version, please edit `options` file with `export IMAGE_VERSION={your version}` first and then run the `docker-compose_pub-elasticsearch.yml`.
+
+#### How to run the pub-elasticsearch?
+- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-elasticsearch/docker-compose_pub-elasticsearch.yml up -d -v`
+
+
+### pub-nginx
+> pub-nginx is based on Nginx official images to customize the JSON log file and volumes. The default Rabbigmq version is `1.19.9`. If you want to use a higher version, please edit `options` file with `export IMAGE_VERSION={your version}` first and then run the `docker-compose_pub-nginx.yml`. Please relace all the sample configs and files before running on production. Read more configuration details [Here](https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-nginx/README.md)
+
+#### How to run the pub-nginx?
+- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-nginx/docker-compose_pub-nginx.yml up -d -v`
+
 
 
 # References

@@ -1,5 +1,5 @@
 # custom-docker-images
-This repository customizes a series of infrastructure Docker images to make your development easier and quicker. It provides infra images for Alpine with timezone `Asia/Shanghai`, Python 2.7 and Python 3.9 with timezone `Asia/Shanghai`, MySQL image `pub-mysql`, and MongoDB image `pub-mongodb`.
+This repository customizes a series of infrastructure Docker images to make your development easier and quicker, all of them are <span style="color:blue">**Production Ready**</span>. It provides infra images for Alpine with timezone `Asia/Shanghai`, Python 2.7 and Python 3.9 with timezone `Asia/Shanghai`, MySQL image `pub-mysql`, and MongoDB image `pub-mongodb`.
 
 ## infra-images
 

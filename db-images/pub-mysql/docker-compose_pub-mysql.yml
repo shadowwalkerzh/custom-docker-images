@@ -1,7 +1,6 @@
-version: '3.7'
 services:
   mysql:
-    image: mysql:${IMAGE_VERSION:-5.7}
+    image: mysql:${IMAGE_VERSION:-8.0}
     logging:
       driver: json-file
       options:
@@ -9,10 +8,10 @@ services:
         max-size: 200m
     restart: always
     volumes:
-      - data:/var/lib/mysql
-      - log:/var/log/mysql
-      - conf:/etc/mysql/conf.d
-      - mysqld:/var/run/mysqld
+      - pub_mysql_data:/var/lib/mysql
+      - pub_mysql_log:/var/log/mysql
+      - pub_mysql_conf:/etc/mysql/conf.d
+      - /opt:/var/run/mysqld
     container_name: standalone.pub-mysql
     hostname: standalone.pub-mysql
     environment:
@@ -25,33 +24,13 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-test}
     ports:
       - 3306:3306 # change the port if local 3306 is in use
+      - 33060:33060 # change the port if local 33060 is in use
     networks:
       - custom-network
 networks:
   custom-network:
     driver: bridge
 volumes:
-  data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /opt/pub-mysql/data/data
-      o: bind
-  log:
-    driver: local
-    driver_opts:
-      type: none
-      device: /opt/pub-mysql/data/log
-      o: bind
-  conf:
-    driver: local
-    driver_opts:
-      type: none
-      device: /opt/pub-mysql/data/conf.d
-      o: bind
-  mysqld:
-    driver: local
-    driver_opts:
-      type: none
-      device: /opt/pub-mysql/data/mysqld
-      o: bind
+  pub_mysql_data:
+  pub_mysql_log:
+  pub_mysql_conf:

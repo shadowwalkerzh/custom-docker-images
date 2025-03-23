@@ -20,20 +20,21 @@ This repository customizes a series of infrastructure Docker images to make your
 ## db-images
 
 ### pub-mysql
-> pub-mysql is based on MySQL official images to customize the JSON log file and volumes, set the default root password to `admin`, create a default database `test` with a fully granted account name `user`, password `changeMe123`. The default MySQL version is `5.7`. If you want to use `8.0` or higher, please edit `options` file with `export IMAGE_VERSION=8.0` first and then run the `docker-compose_pub-mysql.yml`.
-
-#### How to run the MySQL server 5.7?
-- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-mysql/docker-compose_pub-mysql.yml up -d -v`
+> pub-mysql is based on MySQL official images to customize the JSON log file and volumes, set the default root password to `admin`, create a default database `test` with a fully granted account name `user`, password `changeMe123`. The default MySQL version is `8.0`. If you want to use `5.7` or higher, please edit `options` file with `export IMAGE_VERSION=5.7` first and then run the `docker-compose_pub-mysql.yml`.
 
 #### How to run the MySQL server 8.0?
-- `export IMAGE_VERSION=8.0`
+- `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-mysql/docker-compose_pub-mysql.yml up -d -v`
+
+#### How to run the MySQL server 5.7?
+- `export IMAGE_VERSION=5.7`
 - `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-mysql/docker-compose_pub-mysql.yml up -d -v`
 
 #### How to access MySQL from the Docker host?
 - Install MySQL client: `sudo apt-get install mysql-client-core-5.7`
 - Create mysqld directory if not existing: `sudo mkdir -p /var/run/mysqld`
-- Create mysqld link: `sudo ln -s /opt/pub-mysql/data/mysqld/mysqld.sock /var/run/mysqld/mysqld.sock`
+- Create mysqld link: `sudo ln -s /opt/mysqld.sock /var/run/mysqld/mysqld.sock`
 - Login to MySQL: `mysql -uuser -pchangeMe123`
+- You can also use MysqlWorkbench or Navicat to connect the Mysql Server. (**High Recommended**)
 
 ### pub-mongodb
 > pub-mongodb is based on MongoDB official images to customize the JSON log file and volumes, set the default root user `root` and password `root`. The default MongoDB version is `4.2.0`. If you want to use a higher version like `8.0`, please edit `options` file with `export IMAGE_VERSION=8.0` first and then run the `docker-compose_pub-mongodb.yml`.

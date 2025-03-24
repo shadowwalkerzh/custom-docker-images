@@ -1,0 +1,60 @@
+services:
+  mongodb:
+    image: mongo:8.0
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 200m
+    restart: always
+    volumes:
+      - pub_mongodb_conf:/data/configdb
+      - pub_mongodb_data:/data/db
+      - pub_mongodb_log:/var/log/mongodb
+    container_name: standalone.pub-mongodb8
+    hostname: standalone.pub-mongodb8
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - 27017:27017
+    networks:
+      - custom-network
+  mongo-express:
+    image: mongo-express:1.0.2-20-alpine3.19
+    depends_on:
+      mongodb:
+        condition: service_started
+        restart: true
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 200m
+    restart: always
+    container_name: standalone.pub-mongo-express-alpine
+    hostname: standalone.pub-mongo-express-alpine
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: user                 # mongo-express web username
+      ME_CONFIG_BASICAUTH_PASSWORD: changeMe123          # mongo-express web password
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: true               # Enable admin access to all databases. Send strings: `"true"` or `"false"`
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root              # MongoDB admin username
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root              # MongoDB admin password
+      ME_CONFIG_MONGODB_PORT: 27017                      # MongoDB port
+      ME_CONFIG_MONGODB_SERVER: standalone.pub-mongodb8  # MongoDB container name. Use comma delimited list of host names for replica sets.
+      ME_CONFIG_REQUEST_SIZE: 100kb                      # Maximum payload size. CRUD operations above this size will fail in [body-parser](https://www.npmjs.com/package/body-parser).
+      ME_CONFIG_SITE_BASEURL: /                          # Set the baseUrl to ease mounting at a subdirectory. Remember to include a leading and trailing slash.
+      ME_CONFIG_SITE_COOKIESECRET: cookiesecret          # String used by [cookie-parser middleware](https://www.npmjs.com/package/cookie-parser) to sign cookies.
+      ME_CONFIG_SITE_SESSIONSECRET: sessionsecret        # String used to sign the session ID cookie by [express-session middleware](https://www.npmjs.com/package/express-session).
+      ME_CONFIG_SITE_SSL_ENABLED: false
+    ports:
+      - 8081:8081
+    networks:
+      - custom-network
+networks:
+  custom-network:
+    driver: bridge
+volumes:
+  pub_mongodb_data:
+  pub_mongodb_log:
+  pub_mongodb_conf:

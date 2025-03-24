@@ -1,4 +1,3 @@
-version: '3.7'
 services:
   mongodb:
     image: mongo:${IMAGE_VERSION:-4.2.0}
@@ -9,9 +8,9 @@ services:
         max-size: 200m
     restart: always
     volumes:
-      - configdb:/data/configdb
-      - db:/data/db
-      - log:/var/log/mongodb
+      - pub_mongodb_conf:/data/configdb
+      - pub_mongodb_data:/data/db
+      - pub_mongodb_log:/var/log/mongodb
     container_name: standalone.pub-mongodb
     hostname: standalone.pub-mongodb
     environment:
@@ -25,21 +24,6 @@ networks:
   custom-network:
     driver: bridge
 volumes:
-  db:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/data/db
-      o: bind
-  log:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/data/log
-      o: bind
-  configdb:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/data/configdb
-      o: bind
+  pub_mongodb_data:
+  pub_mongodb_log:
+  pub_mongodb_conf:

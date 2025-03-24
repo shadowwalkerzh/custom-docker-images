@@ -1,3 +1,0 @@
-export IMAGE_VERSION="8.0"
-export RELEASE="1.0"
-export TAG=(walkerzhuo/pub-mysql:$RELEASE)

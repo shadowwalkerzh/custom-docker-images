@@ -1,3 +1,0 @@
-export IMAGE_VERSION="4.0"
-export RELEASE="1.0"
-export TAG=(walkerzhuo/pub-redis:$RELEASE)

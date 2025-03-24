@@ -1,0 +1,27 @@
+services:
+  redis:
+    image: redis:8.0-M04-alpine
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 200m
+    restart: always
+    volumes:
+      - pub_redis_data:/data
+      - pub_redis_conf:/etc/redis # you can mount your own redis.conf here
+      - pub_redis_log:/var/log/redis
+    container_name: standalone.pub-redis8
+    hostname: standalone.pub-redis8
+    command: redis-server --requirepass ${REDIS_PASSWORD:-redis_pass}
+    ports:
+      - 6379:6379
+    networks:
+      - custom-network
+networks:
+  custom-network:
+    driver: bridge
+volumes:
+  pub_redis_data:
+  pub_redis_conf:
+  pub_redis_log:

@@ -30,10 +30,6 @@ This repository customizes a series of infrastructure Docker images to make your
 - `docker-compose -f https://github.com/shadowwalkerzh/custom-docker-images/blob/master/db-images/pub-mysql/docker-compose_pub-mysql.yml up -d -v`
 
 #### How to access MySQL from the Docker host?
-- Install MySQL client: `sudo apt-get install mysql-client-core-5.7`
-- Create mysqld directory if not existing: `sudo mkdir -p /var/run/mysqld`
-- Create mysqld link: `sudo ln -s /opt/mysqld.sock /var/run/mysqld/mysqld.sock`
-- Login to MySQL: `mysql -uuser -pchangeMe123`
 - You can also use MysqlWorkbench or Navicat to connect the Mysql Server. (**High Recommended**)
 
 ### pub-mongodb

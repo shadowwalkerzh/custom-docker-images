@@ -4,44 +4,44 @@
 # Adjust according to your cluster size, hardware, and security requirements.
 
 # ---------------------------------- Cluster -----------------------------------
-cluster.name: my-production-cluster  # Unique name for your cluster
+cluster.name: pub-es-cluster  # Unique name for your cluster
 
 # ----------------------------------- Node ------------------------------------
 node.name: ${HOSTNAME}  # Uses the hostname as the node name
 node.roles: [ data, ingest ]  # Define node roles (data, master, ingest, ml, etc.)
 
 # ----------------------------------- Paths -----------------------------------
-path.data: /var/lib/elasticsearch  # Directory for storing index data
-path.logs: /var/log/elasticsearch  # Directory for logs
+# path.data: /var/lib/elasticsearch  # Directory for storing index data
+# path.logs: /var/log/elasticsearch  # Directory for logs
 
 # ----------------------------------- Memory ----------------------------------
 bootstrap.memory_lock: true  # Prevents Elasticsearch from swapping to disk
-ES_JAVA_OPTS: -Xms8g -Xmx8g  # Set in jvm.options (50% of system RAM, max 32GB)
+indices.memory.index_buffer_size: 10%
 
 # ---------------------------------- Network ----------------------------------
-network.host: _site_  # Binds to the local network interface
+network.host: 0.0.0.0  # Binds to the local network interface
 http.port: 9200  # Port for HTTP API
 transport.port: 9300  # Port for internal node communication
 
 # --------------------------------- Discovery ---------------------------------
 discovery.seed_hosts:  # List of master-eligible nodes for cluster formation
-  - node1.example.com:9300
-  - node2.example.com:9300
-  - node3.example.com:9300
+  - pub_es8_01
+  - pub_es8_02
+  - pub_es8_03
 cluster.initial_master_nodes:  # Nodes that can elect a master
-  - node1.example.com
-  - node2.example.com
-  - node3.example.com
+  - pub_es8_01
+  - pub_es8_02
+  - pub_es8_03
 
 # ---------------------------------- Security ----------------------------------
-xpack.security.enabled: true  # Enable security (requires license)
-xpack.security.http.ssl.enabled: true
-xpack.security.http.ssl.keystore.path: certs/http-keystore.p12
-xpack.security.http.ssl.truststore.path: certs/http-truststore.p12
-xpack.security.transport.ssl.enabled: true
-xpack.security.transport.ssl.verification_mode: certificate
-xpack.security.transport.ssl.keystore.path: certs/transport-keystore.p12
-xpack.security.transport.ssl.truststore.path: certs/transport-truststore.p12
+xpack.security.enabled: false  # Enable security (requires license)
+xpack.security.http.ssl.enabled: false
+# xpack.security.http.ssl.keystore.path: certs/http-keystore.p12
+# xpack.security.http.ssl.truststore.path: certs/http-truststore.p12
+xpack.security.transport.ssl.enabled: false
+# xpack.security.transport.ssl.verification_mode: certificate
+# xpack.security.transport.ssl.keystore.path: certs/transport-keystore.p12
+# xpack.security.transport.ssl.truststore.path: certs/transport-truststore.p12
 
 # ---------------------------------- Monitoring -------------------------------
 xpack.monitoring.collection.enabled: true  # Enable monitoring
@@ -53,57 +53,3 @@ indices.query.bool.max_clause_count: 1024  # Increase if needed for complex quer
 # ---------------------------------- Thread Pools -----------------------------
 thread_pool.search.queue_size: 1000  # Adjust based on workload
 thread_pool.write.queue_size: 500
-
-# ---------------------------------- Slow Logs --------------------------------
-index.search.slowlog.threshold.query.warn: 10s
-index.search.slowlog.threshold.query.info: 5s
-index.indexing.slowlog.threshold.index.warn: 10s
-index.indexing.slowlog.threshold.index.info: 5s
-
-
-# Cluster name
-cluster.name: my-production-cluster
-
-# Node name
-node.name: ${HOSTNAME}
-
-# Network settings
-network.host: 0.0.0.0  # Bind to all network interfaces
-http.port: 9200
-
-# Discovery settings
-discovery.seed_hosts: ["host1", "host2", "host3"]  # Replace with your actual hostnames or IPs
-cluster.initial_master_nodes: ["node-1", "node-2", "node-3"]  # Replace with your actual node names
-
-# Memory settings
-indices.fielddata.cache: soft
-indices.memory.index_buffer_size: 10%
-
-# Index settings
-index.number_of_shards: 3
-index.number_of_replicas: 2
-
-# Enable security features
-xpack.security.enabled: true
-xpack.security.transport.ssl.enabled: true
-xpack.security.http.ssl.enabled: true
-
-# Set the credentials for the elastic user
-xpack.security.transport.ssl.verification_mode: certificate
-xpack.security.http.ssl.key: /path/to/your/elastic-certificates.key
-xpack.security.http.ssl.certificate: /path/to/your/elastic-certificates.crt
-xpack.security.http.ssl.certificate_authorities: ["/path/to/your/ca.crt"]
-
-# Logging settings
-path.logs: /var/log/elasticsearch
-logger.level: info
-
-# Performance settings
-bootstrap.memory_lock: true  # Prevent Elasticsearch from swapping
-
-# Path settings
-path.data: /var/lib/elasticsearch
-
-
-
-

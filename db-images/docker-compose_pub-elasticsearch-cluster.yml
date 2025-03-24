@@ -1,0 +1,107 @@
+services:
+  pub_es8_01:
+    image: elasticsearch:8.17.0
+    container_name: cluster.pub-es8-01
+    hostname: cluster.pub-es8-01
+    restart: always
+    ports:
+      - 9200:9200
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    environment:
+      - node.name=pub_es8_01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=pub_es8_02,pub_es8_03
+      - cluster.initial_master_nodes=pub_es8_01,pub_es8_02,pub_es8_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - pub_es_data01:/usr/share/elasticsearch/data
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "200m"
+    networks:
+      - custom-network
+  pub_es8_02:
+    image: elasticsearch:8.17.0
+    container_name: cluster.pub-es8-02
+    hostname: cluster.pub-es8-02
+    restart: always
+    ports:
+      - 9200:9200
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    environment:
+      - node.name=pub_es8_02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=pub_es8_01,pub_es8_03
+      - cluster.initial_master_nodes=pub_es8_01,pub_es8_02,pub_es8_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - pub_es_data02:/usr/share/elasticsearch/data
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "200m"
+    networks:
+      - custom-network
+  pub_es8_03:
+    image: elasticsearch:8.17.0
+    container_name: cluster.pub-es8-03
+    hostname: cluster.pub-es8-03
+    restart: always
+    ports:
+      - 9200:9200
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    environment:
+      - node.name=pub_es8_03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=pub_es8_01,pub_es8_02
+      - cluster.initial_master_nodes=pub_es8_01,pub_es8_02,pub_es8_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - pub_es_data03:/usr/share/elasticsearch/data
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "200m"
+    networks:
+      - custom-network
+networks:
+  custom-network:
+    driver: bridge
+volumes:
+  pub_es_data01:
+  pub_es_data02:
+  pub_es_data03:

@@ -1,0 +1,23 @@
+# ======================== Elasticsearch Configuration for Development =========================
+#
+# NOTE: This configuration is for a developing or staging environment.
+# Adjust according to your cluster size, hardware, and security requirements.
+
+discovery.type: single-node
+
+
+# ---------------------------------- Security ----------------------------------
+xpack.security.enabled: false  # Disable security (requires license)
+xpack.security.http.ssl.enabled: false
+
+# ----------------------------------- Memory ----------------------------------
+bootstrap.memory_lock: true 
+  # Set in jvm.options (50% of system RAM, max 32GB)
+
+# ---------------------------------- Network ----------------------------------
+http.port: 9200  # Port for HTTP API
+transport.port: 9300  # Port for internal node communication
+
+# ---------------------------------- Thread Pools -----------------------------
+thread_pool.search.queue_size: 1000  # Adjust based on workload
+thread_pool.write.queue_size: 500

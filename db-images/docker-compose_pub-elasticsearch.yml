@@ -1,0 +1,32 @@
+services:
+  elasticsearch:
+    image: elasticsearch:8.17.0
+    container_name: standalone.pub-elasticsearch8
+    hostname: standalone.pub-elasticsearch8
+    restart: always
+    environment:
+      - "ES_JAVA_OPTS: -Xms512m -Xmx512m"
+    ports:
+      - 9200:9200
+      - 9300:9300
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - pub_es_data:/usr/share/elasticsearch/data
+      - pub_es_log:/usr/share/elasticsearch/logs
+      - ${PWD}/develop_elasticsearch-standalone.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "200m"
+    networks:
+      - custom-network
+networks:
+  custom-network:
+    driver: bridge
+volumes:
+  pub_es_data:
+  pub_es_log:

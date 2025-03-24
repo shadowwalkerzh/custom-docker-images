@@ -1,0 +1,39 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4.0-management-alpine
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 200m
+    restart: always
+    volumes:
+      - pub_rabbitmq_data:/var/lib/rabbitmq
+      - pub_rabbitmq_log:/var/log/rabbitmq
+      - pub_rabbitmq_conf:/etc/rabbitmq # you can mount your own configuration file here (customize plusgins, conf.d, etc)
+    container_name: standalone.pub-rabbitmq4
+    hostname: standalone.pub-rabbitmq4
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      RABBITMQ_DEFAULT_VHOST: primary_host
+    ports:
+      - 4369:4369
+      - 5671:5671
+      - 5672:5672
+      - 25672:25672
+      - 15671:15671 # management port
+      - 15672:15672
+      - 61613:61613
+      - 61614:61614
+      - 15674:15674
+      - 15692:15692
+    networks:
+      - custom-network
+networks:
+  custom-network:
+    driver: bridge
+volumes:
+  pub_rabbitmq_data:
+  pub_rabbitmq_log:
+  pub_rabbitmq_conf:

@@ -11,7 +11,6 @@ services:
       - pub_mysql_data:/var/lib/mysql
       - pub_mysql_log:/var/log/mysql
       - pub_mysql_conf:/etc/mysql/conf.d
-      - /opt:/var/run/mysqld
     container_name: standalone.pub-mysql
     hostname: standalone.pub-mysql
     environment:

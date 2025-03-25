@@ -8,7 +8,7 @@ cluster.name: pub-es-cluster  # Unique name for your cluster
 
 # ----------------------------------- Node ------------------------------------
 node.name: ${HOSTNAME}  # Uses the hostname as the node name
-node.roles: [ data, ingest ]  # Define node roles (data, master, ingest, ml, etc.)
+node.roles: [ data, ingest, master ]  # Define node roles (data, master, ingest, ml, etc.)
 
 # ----------------------------------- Paths -----------------------------------
 # path.data: /var/lib/elasticsearch  # Directory for storing index data
@@ -25,9 +25,9 @@ transport.port: 9300  # Port for internal node communication
 
 # --------------------------------- Discovery ---------------------------------
 discovery.seed_hosts:  # List of master-eligible nodes for cluster formation
-  - pub_es8_01
-  - pub_es8_02
-  - pub_es8_03
+  - pub_es8_01:9300
+  - pub_es8_02:9300
+  - pub_es8_03:9300
 cluster.initial_master_nodes:  # Nodes that can elect a master
   - pub_es8_01
   - pub_es8_02
@@ -36,9 +36,12 @@ cluster.initial_master_nodes:  # Nodes that can elect a master
 # ---------------------------------- Security ----------------------------------
 xpack.security.enabled: false  # Enable security (requires license)
 xpack.security.http.ssl.enabled: false
+xpack.security.transport.ssl.enabled: false
+
+## FIXME: Add the following settings for secure communication in production ##
+
 # xpack.security.http.ssl.keystore.path: certs/http-keystore.p12
 # xpack.security.http.ssl.truststore.path: certs/http-truststore.p12
-xpack.security.transport.ssl.enabled: false
 # xpack.security.transport.ssl.verification_mode: certificate
 # xpack.security.transport.ssl.keystore.path: certs/transport-keystore.p12
 # xpack.security.transport.ssl.truststore.path: certs/transport-truststore.p12
